@@ -202,7 +202,7 @@ MoveList gen_pseudo_legal_moves() {
     gen_bishop_moves(move_list, board.active_color);
 
     // Queens
-    gen_bishop_moves(move_list, board.active_color);
+    gen_queen_moves(move_list, board.active_color);
 
     // Knights
     gen_knight_moves(move_list, board.active_color);
