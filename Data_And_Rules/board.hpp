@@ -1,8 +1,8 @@
 #pragma once
-#include "constants.hpp"
+#include "../constants.hpp"
 
 struct Board {
-    char piece_on_board[TILES]; // 8 * 8 board representation
+    char piece_on_board[BOARD_SIZE]; // 8 * 8 board representation
 
     // Bitboard representation
     Bitboard pieces[2][6];
@@ -17,6 +17,11 @@ struct Board {
     int en_passent;
     int halfmove_clock;
     int fullmove_clock;
+    int game_phase;
+
+    // Material values left on board
+    int mg_material[2];
+    int eg_material[2];
 
     Board();
 
@@ -24,5 +29,7 @@ struct Board {
     void print_board();
     
 } ;
+
+const int phase_piece_values[6] = { 4, 2, 1, 1, 0, 0};
 
 extern Board board;

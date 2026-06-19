@@ -2,8 +2,8 @@
 #include <iostream>
 #include <string>
 #include "constants.hpp"
-#include "board.hpp"
-#include "table.hpp"
+#include "Data_And_Rules/board.hpp"
+#include "Data_And_Rules/table.hpp"
 
 Lookup_Table table;
 Board board;

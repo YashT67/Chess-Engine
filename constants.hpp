@@ -55,5 +55,7 @@ enum Rank {
     RANK_5, RANK_6, RANK_7, RANK_8
 };
 
-constexpr int TILES = 64;
+constexpr int BOARD_SIZE = 64;
 inline int NO_SQ = 64;
+
+const int piece_values[6] = { 9, 5, 3, 3, 1, 100};

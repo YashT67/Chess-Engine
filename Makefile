@@ -4,7 +4,10 @@ CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra -g -O0
 
 TARGET = chess
-SRCS = $(wildcard *.cpp)
+
+# Tell Make to look in the root folder AND the 'engine' subdirectory
+SRCS = $(wildcard *.cpp) $(wildcard engine/*.cpp)
+
 OBJS = $(SRCS:.cpp=.o)
 
 # Default rule

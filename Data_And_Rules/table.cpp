@@ -59,7 +59,7 @@ static Bitboard calculate_bishop_vision(int square, Bitboard blockers) {
 
 void Lookup_Table::init_masks() {
     // Rook Mask
-    for(int i = 0; i < TILES; i++) {
+    for(int i = 0; i < BOARD_SIZE; i++) {
         rook_mask[i] = 0ULL;
         for(int j = i; j%8 > 0; j--) rook_mask[i] |= (1ULL << j);
         for(int j = i; j%8 < 7; j++) rook_mask[i] |= (1ULL << j);
@@ -69,7 +69,7 @@ void Lookup_Table::init_masks() {
     }
 
     // Bishop Mask
-    for(int i = 0; i < TILES; i++) {
+    for(int i = 0; i < BOARD_SIZE; i++) {
         bishop_mask[i] = 0ULL;
         for(int j = i; j%8 < 7 && j < 56; j += 9) bishop_mask[i] |= (1ULL << j);
         for(int j = i; j%8 > 0 && j > 7; j -= 9) bishop_mask[i] |= (1ULL << j);
@@ -94,7 +94,7 @@ void Lookup_Table::init_masks() {
 
 void Lookup_Table::init_tables() {
     // Rook Table
-    for(int i = 0; i < TILES; i++) {
+    for(int i = 0; i < BOARD_SIZE; i++) {
         int relevant_bits = rook_relevant_bits[i];
         int count = (1 << relevant_bits);
         for(int j = 0; j < count; j++) {
@@ -106,7 +106,7 @@ void Lookup_Table::init_tables() {
     }
 
     // Bishop Table
-    for(int i = 0; i < TILES; i++) {
+    for(int i = 0; i < BOARD_SIZE; i++) {
         int relevant_bits = bishop_relevant_bits[i];
         int count = (1 << relevant_bits);
         for(int j = 0; j < count; j++) {
@@ -118,7 +118,7 @@ void Lookup_Table::init_tables() {
     }
 
     // King Table
-    for(int i = 0; i < TILES; i++) {
+    for(int i = 0; i < BOARD_SIZE; i++) {
         Bitboard vision = 0ULL;
         Bitboard king = (1ULL << i);
         int file = i%8;
@@ -138,7 +138,7 @@ void Lookup_Table::init_tables() {
     }
 
     // Knight Table
-    for(int i = 0; i < TILES; i++) {
+    for(int i = 0; i < BOARD_SIZE; i++) {
         Bitboard vision = 0ULL;
         Bitboard knight = (1ULL << i);
         int file = i%8;
@@ -162,7 +162,7 @@ void Lookup_Table::init_tables() {
     }
 
     // White Pawn Table for pawn attacks
-    for(int i = 0; i < TILES; i++) {
+    for(int i = 0; i < BOARD_SIZE; i++) {
         Bitboard attack = 0ULL;
         Bitboard pawn = (1ULL << i);
         int file = i%8;
@@ -172,7 +172,7 @@ void Lookup_Table::init_tables() {
     }
 
     // Black Pawn Table for pawn attacks
-    for(int i = 0; i < TILES; i++) {
+    for(int i = 0; i < BOARD_SIZE; i++) {
         Bitboard attack = 0ULL;
         Bitboard pawn = (1ULL << i);
         int file = i%8;

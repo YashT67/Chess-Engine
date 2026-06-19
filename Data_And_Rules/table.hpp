@@ -1,18 +1,18 @@
 #pragma once
-#include "constants.hpp"
+#include "../constants.hpp"
 
 struct Lookup_Table {
     // Bitboard masks / Bitboard for rook or bishop vision for each square
-    Bitboard rook_mask[TILES];
-    Bitboard bishop_mask[TILES];
+    Bitboard rook_mask[BOARD_SIZE];
+    Bitboard bishop_mask[BOARD_SIZE];
 
     // Bitboard lookup table for vision when blockers are present
-    Bitboard rook_table[TILES][4096];
-    Bitboard bishop_table[TILES][512];
-    Bitboard king_table[TILES];
-    Bitboard knight_table[TILES];
-    Bitboard black_pawn_table[TILES];
-    Bitboard white_pawn_table[TILES];
+    Bitboard rook_table[BOARD_SIZE][4096];
+    Bitboard bishop_table[BOARD_SIZE][512];
+    Bitboard king_table[BOARD_SIZE];
+    Bitboard knight_table[BOARD_SIZE];
+    Bitboard black_pawn_table[BOARD_SIZE];
+    Bitboard white_pawn_table[BOARD_SIZE];
 
     // File and Rank Bitboard masks
     Bitboard file_mask[8];
@@ -23,7 +23,7 @@ struct Lookup_Table {
     void init_tables();
 } ;
 
-const int rook_relevant_bits[TILES] = {
+const int rook_relevant_bits[BOARD_SIZE] = {
     12, 11, 11, 11, 11, 11, 11, 12,
     11, 10, 10, 10, 10, 10, 10, 11,
     11, 10, 10, 10, 10, 10, 10, 11,
@@ -34,7 +34,7 @@ const int rook_relevant_bits[TILES] = {
     12, 11, 11, 11, 11, 11, 11, 12
 };
 
-const int bishop_relevant_bits[TILES] = {
+const int bishop_relevant_bits[BOARD_SIZE] = {
     6, 5, 5, 5, 5, 5, 5, 6,
     5, 5, 5, 5, 5, 5, 5, 5,
     5, 5, 7, 7, 7, 7, 5, 5,
@@ -45,7 +45,7 @@ const int bishop_relevant_bits[TILES] = {
     6, 5, 5, 5, 5, 5, 5, 6
 };
 
-const uint64_t rook_magic[TILES] = {
+const uint64_t rook_magic[BOARD_SIZE] = {
     0x2080020500400f0ULL, 0x28444000400010ULL, 0x20000a1004100014ULL, 0x20010c090202006ULL,
     0x8408008200810004ULL, 0x1746000808002ULL, 0x2200098000808201ULL, 0x12c0002080200041ULL,
     0x104000208e480804ULL, 0x8084014008281008ULL, 0x4200810910500410ULL, 0x100014481c20400cULL,
@@ -64,7 +64,7 @@ const uint64_t rook_magic[TILES] = {
     0x8029510200708ULL, 0x8008440100404241ULL, 0x2420001111000bdULL, 0x4000882304000041ULL,
 };
 
-const uint64_t bishop_magic[TILES] = {
+const uint64_t bishop_magic[BOARD_SIZE] = {
     0x100420000431024ULL, 0x280800101073404ULL, 0x42000a00840802ULL, 0xca800c0410c2ULL,
     0x81004290941c20ULL, 0x400200450020250ULL, 0x444a019204022084ULL, 0x88610802202109aULL,
     0x11210a0800086008ULL, 0x400a08c08802801ULL, 0x1301a0500111c808ULL, 0x1280100480180404ULL,

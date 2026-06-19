@@ -1,5 +1,6 @@
 #include "board.hpp"
 #include "table.hpp"
+#include "../Brain/eval.hpp"
 #include <iostream>
 #include <cctype>
 
@@ -52,6 +53,17 @@ Board::Board() {
 
     // Active Color
     active_color = WHITE;
+
+    // Current game phase : 24 (opening) - 0 (endgame)
+    board.game_phase = 24;
+
+    // Initialize material piece total values
+    mg_material[0] = 0, eg_material[0] = 0;
+    for(int i = 0; i < 6; i++) {
+        mg_material[0] += mg_values[i] * __builtin_popcount(pieces[0][i]);
+        eg_material[0] += eg_values[i] * __builtin_popcount(pieces[0][i]);
+    }
+    mg_material[1] = mg_material[0], eg_material[1] = eg_material[0];
 }
 
 void Board::print_board() {
