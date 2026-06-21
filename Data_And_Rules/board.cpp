@@ -1,5 +1,6 @@
 #include "board.hpp"
 #include "table.hpp"
+#include "move.hpp"
 #include "../Brain/eval.hpp"
 #include <iostream>
 #include <cctype>
@@ -43,7 +44,7 @@ Board::Board() {
     queenside_castling[0] = true, queenside_castling[1] = true;
 
     // En passent square i.e. the square behind the pawn that just moved 2 squares
-    en_passent = NO_SQ;
+    en_passant = NO_SQ;
 
     // A counter tracking half-moves since the last pawn advance or capture, used for the fifty-move draw rule
     halfmove_clock = 0;
@@ -55,7 +56,7 @@ Board::Board() {
     active_color = WHITE;
 
     // Current game phase : 24 (opening) - 0 (endgame)
-    board.game_phase = 24;
+    game_phase = 24;
 
     // Initialize material piece total values
     mg_material[0] = 0, eg_material[0] = 0;
@@ -137,9 +138,9 @@ void Board::generate_fen() {
     std::cout << ' ';
 
     // En Passent
-    if(en_passent < 64) {
-        char rank = '1' + en_passent/8;
-        char file = 'a' + en_passent%8;
+    if(en_passant < 64) {
+        char rank = '1' + en_passant/8;
+        char file = 'a' + en_passant%8;
         std::cout << file << rank << ' ';
     }
     else std::cout << "- ";
@@ -149,3 +150,25 @@ void Board::generate_fen() {
     std::cout << fullmove_clock << '\n';
 }
 
+// Parse move by finding all the pseudo moves that can be done and check if it's legal(king's safety)
+// or not using make and unmake move and return 1 if move is possible
+Move Board::parse_move(int from, int to, int promote) {
+    MoveList move_list = gen_pseudo_legal_moves(*this);
+    int count = move_list.count;
+
+    for(int i = 0; i < count; i++) {
+        Move move = move_list.moves[i];
+        if(get_from(move) == from && get_to(move) == to) {
+            if(get_promotion(move) != promote)
+                continue;
+
+            char captured = '.';
+            if((captured = make_move(*this, move)) && king_is_attacked(*this)) {
+                unmake_move(*this, move, captured);
+                return 0;
+            }
+            return move;
+        }
+    }
+    return 0;
+}

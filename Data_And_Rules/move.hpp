@@ -14,17 +14,24 @@ inline Move encode_move(int from, int to, int flag) {
     return from | (to << 6) | (flag << 12);
 }
 
-inline int get_move_source(Move m) { 
+inline int get_from(Move m) { 
     return m & 0x3F;
 }
 
-inline int get_move_target(Move m) { 
+inline int get_to(Move m) { 
     return (m >> 6) & 0x3F;
 }
 
-inline int get_move_flag(Move m) { 
+inline int get_flag(Move m) { 
     return (m >> 12) & 0x0F;
 }
 
-MoveList gen_legal_moves();
+inline int get_promotion(Move m) {
+    return ((m >> 12) & 8)? (m >> 12) & 3 : -1; 
+}
 
+MoveList gen_pseudo_legal_moves(struct Board &board);
+
+char make_move(struct Board &board, Move move);
+void unmake_move(struct Board &board, Move move, char captured);
+bool king_is_attacked(struct Board &board);

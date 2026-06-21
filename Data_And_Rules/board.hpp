@@ -14,7 +14,7 @@ struct Board {
     bool active_color;
     bool kingside_castling[2];
     bool queenside_castling[2];
-    int en_passent;
+    int en_passant;
     int halfmove_clock;
     int fullmove_clock;
     int game_phase;
@@ -27,9 +27,8 @@ struct Board {
 
     void generate_fen();
     void print_board();
+    Move parse_move(int from, int to, int promote);
     
 } ;
 
 const int phase_piece_values[6] = { 4, 2, 1, 1, 0, 0};
-
-extern Board board;
